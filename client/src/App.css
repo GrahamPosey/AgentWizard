@@ -1,4 +1,21 @@
 #agentDiv {
-    outline: 2px solid blue; /* Width, style, and color */
+    outline: 1px solid black; /* Width, style, and color */
     padding: 20px;
 }
+
+#promptform {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 10px;
+  }
+
+  #submitprompt{
+    margin: 10px;
+  }
+
+  #inputprompt{
+    margin-left: 6px;
+  }

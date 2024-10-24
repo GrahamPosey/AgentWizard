@@ -1,40 +1,62 @@
-import React, { useEffect, useState } from 'react'
+// Filename - App.js
+
+import "./App.css";
+// importing components from react-router-dom package
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
+} from "react-router-dom";
+import Home from "./pages/Home.jsx";
+// import Home component
+import Agents from "./pages/Agents.jsx";
+// import About component
+import Wizard from "./pages/Wizard.jsx";
 
 function App() {
+    return (
+        <>
+            {/* This is the alias of BrowserRouter i.e. Router */}
+            <Router>
+                <Routes>
+                    {/* This route is for home component 
+          with exact path "/", in component props 
+          we passes the imported component*/}
+                    <Route
+                        exact
+                        path="/"
+                        element={<Home />}
+                    />
 
-  const [backendData, setbackendData] = useState([{}]);
-  useEffect(() => {
-    fetch("/api").then(
-      response => response.json()
-    ).then(
-      data => {
-        console.log("here Graham");
-        setbackendData(data)
-      })
-  }, []);
-  return (
+                    {/* This route is for about component 
+          with exact path "/about", in component 
+          props we passes the imported component*/}
+                    <Route
+                        path="/agents"
+                        element={<Agents />}
+                    />
 
-    <div>
-      <div><h1>Copado Agents</h1></div>
-      <div>
-        <h3>Available Agents:</h3>
-        {(typeof backendData.agents === 'undefined') ? (
-          <p>Loading Agents....</p>
-        ) : (
-          backendData.agents.map((agent, i) => (
-            <div id='agentDiv'>
-              <label>
-                <div style={{ display: 'inline-block' }}>
-                  <input type="checkbox" name="myCheckbox" />
-                  <p key={i} style={{ display: 'inline-block', margin: '0 0 0 5px' }}>{agent}</p>
-                </div>
-              </label>
-            </div>
-          ))
-        )}
-      </div>
-    </div>
-  )
+                    {/* This route is for contactus component
+          with exact path "/contactus", in 
+          component props we passes the imported component*/}
+                    <Route
+                        path="/wizard"
+                        element={<Wizard />}
+                    />
+
+                    {/* If any route mismatches the upper 
+          route endpoints then, redirect triggers 
+          and redirects app to home component with to="/" */}
+                    {/* <Redirect to="/" /> */}
+                    <Route
+                        path="*"
+                        element={<Navigate to="/" />}
+                    />
+                </Routes>
+            </Router>
+        </>
+    );
 }
 
-export default App
+export default App;
