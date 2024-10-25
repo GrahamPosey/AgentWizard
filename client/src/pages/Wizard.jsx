@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-//import connectDB from '../db.js';
+import connectDB from '../db.js';
+connectDB();
 const Wizard = () => {
   var agent;
   const [currentStep, setCurrentStep] = useState(1); // Manages the current step
@@ -25,12 +26,47 @@ const Wizard = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   agent = 'I am a ' + formData.step2Data + ' that specializes in ' + formData.step3Data;
+  //   console.log(agent);
+  //   document.getElementById('finalInput').value = '';
+  //   // You can submit the form data to the backend (Express API) here
+    
+  // };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    agent = 'I am a ' + formData.step2Data + ' that specializes in ' + formData.step3Data;
-    console.log(agent);
+    var agentString = 'I am a ' + formData.step2Data + ' that specializes in ' + formData.step3Data;
+    const agent = {
+      name: formData.step1Data,
+      agentjob: agentString
+    };
+
+    try {
+      console.log('agent = ' + agent);
+      const response = await fetch('http://localhost:5000/createagent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(agent)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Agent added:', result);
+        alert('Agent created successfully!');
+      } else {
+        console.error('Failed to create agent');
+        alert('Failed to create agent');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while creating the agent');
+    }
+
+    // Clear the final input field after submission
     document.getElementById('finalInput').value = '';
-    // You can submit the form data to the backend (Express API) here
   };
 
   return (
