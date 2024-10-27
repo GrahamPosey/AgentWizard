@@ -1,5 +1,6 @@
 // Filename - Agents.jsx
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 //import * as agentModel from '../../../model/Agent.js'
 
 const Agents = () => {
@@ -63,9 +64,24 @@ const Agents = () => {
   }, []);
   return (
     <div>
+    <img src="/copado.png" alt="Logo" className="top-right-logo" />
       <div>
         <h1>Copado AI Agents</h1>
       </div>
+      <ul>
+                <li>
+                    {/* Endpoint to route to Home component */}
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    {/* Endpoint to route to About component */}
+                    <Link to="/agents">Available Agents</Link>
+                </li>
+                <li>
+                    {/* Endpoint to route to Contact Us component */}
+                    <Link to="/wizard">Create New Agent</Link>
+                </li>
+            </ul>
       <div>
         <h3>Available AI Agents:</h3>
         {typeof backendData === "undefined" ? (
@@ -79,8 +95,9 @@ const Agents = () => {
                   <p 
                     key={i}
                     style={{ display: "inline-block", margin: "0 0 0 5px" }}
-                  >
-                    {agent.name}
+                  ><b>
+                    Agent: {agent.name}
+                    </b>
                   </p>
                   <p>{agent.agentjob}</p>
                 </div>

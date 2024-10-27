@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import connectDB from '../db.js';
+import { Link } from "react-router-dom";
 connectDB();
 const Wizard = () => {
   const [currentStep, setCurrentStep] = useState(1); // Manages the current step
@@ -70,6 +71,24 @@ const Wizard = () => {
 
   return (
     <div>
+          <img src="/copado.png" alt="Logo" className="top-right-logo" />
+          <div>
+        <h1>Copado AI Agents Wizard</h1>
+      </div>
+              <ul>
+                <li>
+                    {/* Endpoint to route to Home component */}
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    {/* Endpoint to route to About component */}
+                    <Link to="/agents">Available Agents</Link>
+                </li>
+                <li>
+                    {/* Endpoint to route to Contact Us component */}
+                    <Link to="/wizard">Create New Agent</Link>
+                </li>
+            </ul>
       <h2>Step {currentStep}</h2>
 
       <form onSubmit={handleSubmit}>

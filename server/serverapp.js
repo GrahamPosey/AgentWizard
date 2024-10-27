@@ -3,6 +3,7 @@ import express from 'express'
 import mongoose, { model } from 'mongoose'
 import { Schema } from 'mongoose'
 import cors from 'cors';
+import OpenAI from "openai";
 //import Agent from '../model/Agent.js'
 const app = express()
 const port = 5000
@@ -36,7 +37,54 @@ const agentSchema = new Schema({
 })
 
 const dbModel = mongoose.model('Agent', agentSchema)
-// Query all items
+app.post('/api/generate', async (req, res) => {
+      const openai = new OpenAI({
+        apiKey: '',
+    });   
+    //   const prompt = req;
+    //   const role = req.role;
+      const { role, promptText } = req.body;
+
+  try {
+    console.log('role = ' + role);
+    console.log('promptText = ' + promptText);
+
+    const completion = await openai.chat.completions.create({
+        messages: [
+            {
+                role: "system",
+                content: `${role}`
+            },
+            {
+                role: "user",
+                content: `${promptText}`
+            }],
+        model: "gpt-3.5-turbo",
+        stream: true, // Enable streaming
+
+    });
+    console.log(completion);
+    for await (const chunk of completion) {
+        const content = chunk.choices[0].delta?.content;
+  
+        if (content) {
+          console.log('message = ' + content); // Log the message content
+          res.write(`${content}\n\n`); // Stream content to the client
+        }
+
+    };
+
+    res.write(`[DONE]\n\n`);
+    res.end();
+
+    //res.json({ text: 'This is where the answer goes.' });
+  } catch (error) {
+    console.error(error);
+    res.write(`data: Error: ${error.message}\n\n`);
+    res.end();
+  }
+
+});
 app.post('/createagent', async (req, res) => {
     try {
       const newAgent = new dbModel(req.body);

@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 const Home = () => {
     return (
         <div>
+                <img src="/copado.png" alt="Logo" className="top-right-logo" />
+
             <h1>Agent Home Page</h1>
             <br />
             <ul>
