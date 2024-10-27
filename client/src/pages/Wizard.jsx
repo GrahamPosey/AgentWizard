@@ -73,7 +73,7 @@ const Wizard = () => {
     <div>
           <img src="/copado.png" alt="Logo" className="top-right-logo" />
           <div>
-        <h1>Copado AI Agents Wizard</h1>
+        <h1>Copado AI Agent Wizard</h1>
       </div>
               <ul>
                 <li>
@@ -148,7 +148,7 @@ const Wizard = () => {
 
           {/* Next Button */}
           {currentStep < 3 && (
-            <button type="button" onClick={handleNext}>
+            <button id ='nextButton' type="button" onClick={handleNext}>
               Next
             </button>
           )}
