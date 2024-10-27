@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import connectDB from '../db.js';
 connectDB();
 const Wizard = () => {
-  var agent;
   const [currentStep, setCurrentStep] = useState(1); // Manages the current step
   const [formData, setFormData] = useState({
     step1Data: '',
@@ -66,7 +65,7 @@ const Wizard = () => {
     }
 
     // Clear the final input field after submission
-    document.getElementById('finalInput').value = '';
+    document.getElementById('finalInput').value = ' ';
   };
 
   return (
